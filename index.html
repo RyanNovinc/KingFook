@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Fook — Peking & Shanghai Restaurant</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@400;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #C8281A;
+    --gold: #D4A843;
+    --dark: #1a1108;
+    --cream: #FDF6ED;
+    --warm-white: #FAF3E8;
+    --text: #2c1f0e;
+    --muted: #7a6a55;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--text); font-weight: 300; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(26,17,8,0.96); backdrop-filter: blur(8px);
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
+    height: 64px; border-bottom: 1px solid rgba(212,168,67,0.3);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  button { cursor: pointer; font-family: 'Source Sans 3', sans-serif; border: none; background: none; }
+  .nav-links button { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; padding: 0; background: none; border: none; }
+  .nav-links button:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    background-image: url('YOUR_IMAGE_URL_HERE');
+    background-size: cover;
+    background-position: center 40%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+    min-height: 100vh;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(10, 6, 2, 0.72);
+  }
+  .hero-chinese { font-family: 'Noto Serif SC', serif; font-size: clamp(3rem,8vw,6rem); color: var(--red); letter-spacing: 0.2em; line-height: 1; margin-bottom: 0.5rem; opacity: 0.9; position: relative; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3.5rem,9vw,7rem); color: var(--gold); letter-spacing: 0.05em; line-height: 1; margin-bottom: 0.75rem; position: relative; }
+  .hero-sub { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1rem,2.5vw,1.4rem); color: rgba(255,255,255,0.55); letter-spacing: 0.15em; margin-bottom: 3rem; position: relative; }
+  .hero-divider { width: 120px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 0 auto 2rem; position: relative; }
+  .hero-details { display: flex; gap: 3rem; margin-bottom: 3rem; flex-wrap: wrap; justify-content: center; position: relative; }
+  .hero-detail { color: rgba(255,255,255,0.6); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .hero-detail span { display: block; color: var(--gold); font-size: 1rem; text-transform: none; letter-spacing: 0.02em; margin-top: 0.2rem; font-weight: 600; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; position: relative; }
+  .btn-primary { background: var(--red); color: white; padding: 1rem 2.5rem; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-decoration: none; border-radius: 2px; transition: all 0.2s; display: inline-block; }
+  .btn-primary:hover { background: #a82015; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(200,40,26,0.4); }
+  .btn-secondary { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 1rem 2.5rem; font-size: 1rem; font-weight: 400; letter-spacing: 0.05em; text-decoration: none; border-radius: 2px; transition: all 0.2s; display: inline-block; }
+  .btn-secondary:hover { background: rgba(212,168,67,0.1); }
+
+  /* ORDER BANNER */
+  .order-banner { background: var(--red); padding: 2.5rem 2rem; text-align: center; }
+  .order-banner h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem,4vw,2.2rem); color: white; margin-bottom: 0.5rem; }
+  .order-banner p { color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; font-size: 1rem; }
+  .btn-white { background: white; color: var(--red); padding: 0.9rem 2.5rem; font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; border-radius: 2px; transition: all 0.2s; display: inline-block; }
+  .btn-white:hover { background: var(--cream); transform: translateY(-1px); }
+
+  /* SECTIONS */
+  .section-wrapper { background: var(--cream); }
+  .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-label { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,4vw,2.5rem); color: var(--text); margin-bottom: 1rem; }
+  .section-divider { width: 60px; height: 2px; background: var(--gold); margin: 0 auto; }
+
+  /* FAMILY PACKS */
+  .packs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .pack-card { background: white; border: 1px solid rgba(212,168,67,0.2); border-radius: 4px; padding: 2rem; transition: all 0.2s; }
+  .pack-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .pack-badge { background: var(--red); color: white; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 2px; display: inline-block; margin-bottom: 1rem; }
+  .pack-serves { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+  .pack-price { font-size: 2rem; font-weight: 700; color: var(--red); font-family: 'Playfair Display', serif; margin-bottom: 1rem; }
+  .pack-items { list-style: none; color: var(--muted); font-size: 0.9rem; line-height: 1.8; }
+  .pack-items li::before { content: '·  '; color: var(--gold); }
+
+  /* MENU */
+  .menu-section { background: var(--dark); padding: 5rem 2rem; }
+  .menu-inner { max-width: 1100px; margin: 0 auto; }
+  .menu-section .section-title { color: var(--gold); }
+  .menu-section .section-divider { background: var(--red); }
+  .menu-categories { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 3rem; }
+  .cat-btn { background: transparent; border: 1px solid rgba(212,168,67,0.4); color: rgba(255,255,255,0.6); padding: 0.4rem 1rem; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s; font-family: 'Source Sans 3', sans-serif; }
+  .cat-btn:hover, .cat-btn.active { background: var(--red); border-color: var(--red); color: white; }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: rgba(255,255,255,0.05); }
+  .menu-item { background: rgba(255,255,255,0.03); padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: start; gap: 1rem; transition: background 0.15s; }
+  .menu-item:hover { background: rgba(255,255,255,0.06); }
+  .menu-item-name { color: rgba(255,255,255,0.85); font-size: 0.9rem; font-weight: 400; flex: 1; line-height: 1.4; }
+  .menu-item-note { color: rgba(255,255,255,0.35); font-size: 0.75rem; display: block; margin-top: 0.15rem; }
+  .menu-item-price { color: var(--gold); font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
+  .menu-category-heading { grid-column: 1 / -1; padding: 1.5rem 1.25rem 0.5rem; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); border-top: 1px solid rgba(212,168,67,0.2); letter-spacing: 0.05em; }
+
+  /* INFO */
+  .info-strip { background: var(--warm-white); border-top: 3px solid var(--gold); padding: 3rem 2rem; }
+  .info-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
+  .info-item h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--red); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+  .info-item p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 2rem; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.8rem; letter-spacing: 0.05em; }
+  footer span { color: var(--gold); }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--warm-white); padding: 5rem 2rem; border-top: 1px solid rgba(212,168,67,0.2); }
+  .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+  .testimonials .section-title { color: var(--text); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .review-card { background: white; border-radius: 4px; padding: 1.75rem; border: 1px solid rgba(212,168,67,0.15); }
+  .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 0.75rem; }
+  .review-text { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.25rem; font-style: italic; }
+  .review-author { font-weight: 600; font-size: 0.85rem; color: var(--text); }
+  .review-source { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; }
+
+  #menu { scroll-margin-top: 64px; }
+
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero-details { gap: 1.5rem; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr !important; }
+    .gallery-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">King Fook</div>
+  <ul class="nav-links">
+    <li><button onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Menu</button></li>
+    <li><button onclick="document.getElementById('packs').scrollIntoView({behavior:'smooth'})">Family Packs</button></li>
+    <li><button onclick="document.getElementById('info').scrollIntoView({behavior:'smooth'})">Find Us</button></li>
+    <li><a href="tel:0262581877" class="nav-order-btn">📞 Call to Order</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-chinese">京福</div>
+  <h1 class="hero-name">King Fook</h1>
+  <p class="hero-sub">Peking &amp; Shanghai Restaurant · Canberra</p>
+  <div class="hero-divider"></div>
+  <div class="hero-details">
+    <div class="hero-detail">Phone<span>(02) 6258 1877</span></div>
+    <div class="hero-detail">Florey ACT<span>43 Kesteven St</span></div>
+    <div class="hero-detail">BYO<span>Welcome</span></div>
+  </div>
+  <div class="hero-cta">
+    <a href="tel:0262581877" class="btn-primary">📞 Call to Order</a>
+    <button onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})" class="btn-secondary">View Menu</button>
+  </div>
+</section>
+
+<div class="order-banner" id="order">
+  <h2>Ready to Order?</h2>
+  <p>Call us for pickup or takeaway — ready in 20–30 minutes</p>
+  <a href="tel:0262581877" class="btn-white">📞 Call to Order — (02) 6258 1877</a>
+</div>
+
+<div style="background: var(--dark); padding: 2rem; text-align: center; border-top: 1px solid rgba(212,168,67,0.15);">
+  <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1rem, 2.5vw, 1.3rem); color: rgba(255,255,255,0.75); max-width: 680px; margin: 0 auto 0.75rem; line-height: 1.7;">"Probably serves the best handmade noodles and dumplings in Canberra."</p>
+  <p style="font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);">— Yelp Reviewer</p>
+</div>
+
+<section id="packs" class="section-wrapper">
+  <div class="section">
+    <div class="section-header fade-up">
+      <p class="section-label">Great Value</p>
+      <h2 class="section-title">Family Packs</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="packs-grid">
+      <div class="pack-card fade-up">
+        <span class="pack-badge">For 2–3 People</span>
+        <div class="pack-price">$60</div>
+        <ul class="pack-items">
+          <li>Spring Rolls (4 pieces)</li>
+          <li>Sweet &amp; Sour Pork</li>
+          <li>Boneless Chicken with Lemon Sauce</li>
+          <li>2 Large Fried Rice</li>
+        </ul>
+      </div>
+      <div class="pack-card fade-up">
+        <span class="pack-badge" style="background: var(--gold); color: var(--dark);">Most Popular · 3–4 People</span>
+        <div class="pack-price">$75</div>
+        <ul class="pack-items">
+          <li>Spring Rolls (4 pieces)</li>
+          <li>Beef with Cashew</li>
+          <li>Crispy Chicken with Lemon Sauce</li>
+          <li>Mongolian Lamb</li>
+          <li>Special Fried Rice</li>
+        </ul>
+      </div>
+      <div class="pack-card fade-up">
+        <span class="pack-badge">For 4–5 People</span>
+        <div class="pack-price">$95</div>
+        <ul class="pack-items">
+          <li>King Prawn Cutlets (6 pieces)</li>
+          <li>Black Pepper Chicken</li>
+          <li>Dry Chilli Beef</li>
+          <li>Honey King Prawns</li>
+          <li>2 Large Fried Rice</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="menu-inner">
+    <div class="section-header fade-up">
+      <p class="section-label" style="color: #e05a4e;">Our Menu</p>
+      <h2 class="section-title">What We Serve</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="menu-categories" id="catFilter">
+      <button class="cat-btn active" data-cat="all">All</button>
+      <button class="cat-btn" data-cat="entree">Entrée</button>
+      <button class="cat-btn" data-cat="soup">Soup</button>
+      <button class="cat-btn" data-cat="prawns">King Prawns</button>
+      <button class="cat-btn" data-cat="scallops">Scallops</button>
+      <button class="cat-btn" data-cat="seafood">Seafood</button>
+      <button class="cat-btn" data-cat="squid">Squid</button>
+      <button class="cat-btn" data-cat="chicken">Chicken</button>
+      <button class="cat-btn" data-cat="duck">Duck</button>
+      <button class="cat-btn" data-cat="lamb">Lamb</button>
+      <button class="cat-btn" data-cat="beef">Beef</button>
+      <button class="cat-btn" data-cat="pork">Pork</button>
+      <button class="cat-btn" data-cat="veg">Vegetables</button>
+      <button class="cat-btn" data-cat="rice">Rice</button>
+      <button class="cat-btn" data-cat="noodles">Noodles</button>
+      <button class="cat-btn" data-cat="shanghai">Shanghai</button>
+      <button class="cat-btn" data-cat="special">Special Menu</button>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-header fade-up">
+      <p class="section-label">What People Say</p>
+      <h2 class="section-title">Loved by Canberra</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"A hidden gem that has been around for years. I'd suggest it probably serves the best handmade noodles and dumplings in Canberra."</p>
+        <div class="review-author">Yelp Reviewer</div>
+        <div class="review-source">via Yelp</div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"King Fook chinese restaurant at Florey shops has been our friendly neighborhood eatery for more than 15 years. It's a typical local style good value for money, good fast eat in or take away place. The food has always been tasty."</p>
+        <div class="review-author">TripAdvisor Reviewer</div>
+        <div class="review-source">via TripAdvisor</div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"King Fook does spicy dishes very well, highly recommend the Kung Po king prawns, and the dry chilli beef. Shanghai noodles also a winner!"</p>
+        <div class="review-author">Restaurant Guru Reviewer</div>
+        <div class="review-source">via Restaurant Guru</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="info-strip" id="info">
+  <div class="info-grid">
+    <div class="info-item fade-up"><h3>Location</h3><p>43 Kesteven St<br>Florey ACT 2615</p></div>
+    <div class="info-item fade-up"><h3>Phone</h3><p>(02) 6258 1877<br>Restaurant &amp; Takeaway</p></div>
+    <div class="info-item fade-up"><h3>Hours</h3><p>Tue–Sat: 12–2:30pm &amp; 5–9:30pm<br>Sun &amp; Mon: Closed</p></div>
+    <div class="info-item fade-up"><h3>BYO</h3><p>Bring your own wine<br>No corkage fee</p></div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 <span>King Fook</span> Peking &amp; Shanghai Restaurant · 43 Kesteven St, Florey ACT 2615 · (02) 6258 1877</p>
+</footer>
+
+<script>
+const menuData = [
+  { cat: 'entree', heading: 'Entrée', items: [
+    { name: 'Spring Rolls (Meat or Vegetables)', note: '2 pieces', price: '$3.50' },
+    { name: 'Prawn Chips', price: '$3.00' },
+    { name: 'Dim Sim (Steamed or Fried)', note: '2 pieces', price: '$4.50' },
+    { name: 'Deep Fried Scallops', price: '$18.80' },
+    { name: 'Sesame Prawn Toast', price: '$5.80' },
+    { name: 'Prawn Cutlets', note: '3 pieces', price: '$9.80' },
+    { name: 'Prawn Cocktail', price: '$9.80' },
+    { name: 'Sung Choy Bow', price: '$19.80' },
+    { name: 'Vegetarian Sung Choy Bow', price: '$19.80' },
+    { name: 'Seafood Sung Choy Bow', price: '$24.80' },
+    { name: 'Deep Fried Egg Rolls', price: '$20.80' },
+    { name: 'Satay Stick Chicken or Beef', note: '6 per serve', price: '$20.80' },
+  ]},
+  { cat: 'soup', heading: 'Soup', items: [
+    { name: 'Chinese Mushroom with Chicken Soup', price: '$9.80' },
+    { name: 'Chicken with Sweet Corn Soup', price: '$6.80' },
+    { name: 'Crab Meat with Sweet Corn Soup', price: '$8.80' },
+    { name: 'Hot & Sour Soup', price: '$9.80' },
+    { name: 'Short Soup (Won Ton)', price: '$6.80' },
+    { name: 'Long Soup', price: '$5.80' },
+    { name: 'Chinese Mushroom with Vegetarian Soup', price: '$6.80' },
+    { name: 'Seafood with Bean Curd Soup', price: '$14.80' },
+    { name: 'Combination Short & Long Soup', price: '$21.80' },
+    { name: 'Deluxe Beef Soup', price: '$11.80' },
+  ]},
+  { cat: 'prawns', heading: 'King Prawns', items: [
+    { name: 'Honey King Prawns', price: '$25.80' },
+    { name: 'Satay King Prawns', price: '$25.80' },
+    { name: 'Fried King Prawns in Spicy Peppery Salt', price: '$25.80' },
+    { name: 'Garlic King Prawns', price: '$25.80' },
+    { name: 'King Prawns in Szechuan Chilli Style', price: '$25.80' },
+    { name: 'Kung Po King Prawns', price: '$25.80' },
+    { name: 'Braised King Prawns with Vegetables', price: '$25.80' },
+    { name: 'King Prawn with Egg White', price: '$26.80' },
+    { name: 'King Prawn in Black Peppery Sauce', price: '$25.80' },
+    { name: 'Yushiang King Prawn', price: '$25.80' },
+    { name: 'Green Prawns with Spicy Peppery Salt', note: 'with shell', price: '$30.80' },
+    { name: 'Green Prawn with Shanghai Style', note: 'with shell', price: '$30.80' },
+  ]},
+  { cat: 'scallops', heading: 'Scallops', items: [
+    { name: 'Scallops with Black Bean Sauce', price: '$35.80' },
+    { name: 'Scallops with Ginger and Shallots', price: '$35.80' },
+    { name: 'Scallops with Garlic Sauce', price: '$35.80' },
+    { name: 'Scallops with Egg White', price: '$35.80' },
+    { name: 'Kung Po Scallops', price: '$35.80' },
+    { name: 'Yushiang Scallops', price: '$35.80' },
+  ]},
+  { cat: 'seafood', heading: 'Seafood', items: [
+    { name: 'Fish Fillet with Wine Sauce', price: '$28.80' },
+    { name: 'Sweet and Sour Fish Fillet', price: '$26.80' },
+    { name: 'Fish Fillet in Szechuan Style', price: '$26.80' },
+    { name: 'Mock Crab', price: '$30.80' },
+    { name: 'Deep Fried Flounder with Spicy Peppery Salt', price: '$44.80' },
+    { name: 'Combination Seafood', price: '$30.80' },
+  ]},
+  { cat: 'squid', heading: 'Squid', items: [
+    { name: 'Squid with Black Bean Sauce', price: '$20.80' },
+    { name: 'Satay Squid', price: '$20.80' },
+    { name: 'Squid in Szechuan Sauce', price: '$20.80' },
+    { name: 'Braised Squid with Vegetable', price: '$20.80' },
+    { name: 'Deep Fried Squid with Spicy Peppery Salt', price: '$20.80' },
+  ]},
+  { cat: 'chicken', heading: 'Chicken', items: [
+    { name: 'Honey Chicken', price: '$20.80' },
+    { name: 'Braised Chicken with Cashews or Almonds', price: '$20.80' },
+    { name: 'Chicken in Black Bean Sauce', price: '$20.80' },
+    { name: 'Garlic Chicken', price: '$20.80' },
+    { name: 'Braised Chicken with Vegetable', price: '$20.80' },
+    { name: 'Kung Po Chicken', price: '$20.80' },
+    { name: 'Curry Chicken', price: '$20.80' },
+    { name: 'Satay Chicken', price: '$20.80' },
+    { name: 'Peking Picnic Chicken (Shan Tung)', price: '$22.80' },
+    { name: 'Boneless Chicken with Lemon, Plum or Black Peppery Sauce', price: '$22.80' },
+    { name: 'Crispy Skin Chicken (Black Peppery Sauce)', price: '$22.80' },
+  ]},
+  { cat: 'duck', heading: 'Duck', items: [
+    { name: 'Crispy Aromatic Duck Pancake', note: 'half', price: '$31.80' },
+    { name: 'Duck with Lemon, Plum or Sweet & Sour Sauce', price: '$25.80' },
+    { name: 'Duck with Chinese Mushroom', price: '$27.80' },
+  ]},
+  { cat: 'lamb', heading: 'Lamb', items: [
+    { name: 'Lamb in Shallot and Onion Sauce', price: '$22.80' },
+    { name: 'Mongolian Lamb', price: '$22.80' },
+    { name: 'Lamb Szechuan Style', price: '$22.80' },
+    { name: 'Lamb in Black Bean Sauce', price: '$22.80' },
+    { name: 'Yushiang Lamb', price: '$22.80' },
+  ]},
+  { cat: 'beef', heading: 'Beef', items: [
+    { name: 'Dry Chilli Beef in Shanghai Style', price: '$22.80' },
+    { name: 'Honey Beef', price: '$21.80' },
+    { name: 'Beef in Shallot and Onion Sauce', price: '$21.80' },
+    { name: 'Beef in Oyster Sauce', price: '$21.80' },
+    { name: 'Beef in Black Bean Sauce', price: '$21.80' },
+    { name: 'Satay Beef', price: '$21.80' },
+    { name: 'Curry Beef', price: '$21.80' },
+    { name: 'Szechuan Beef', price: '$21.80' },
+    { name: 'Beef with Vegetables', price: '$21.80' },
+    { name: 'Mongolian Beef', price: '$21.80' },
+  ]},
+  { cat: 'pork', heading: 'Pork', items: [
+    { name: 'Sweet & Sour Pork', price: '$20.80' },
+    { name: 'Sliced Pork in Szechuan Style', price: '$20.80' },
+    { name: 'Satay Pork', price: '$20.80' },
+    { name: 'Yushiang Shredded Pork', price: '$24.80' },
+    { name: 'Double-Cooked Sliced Pork in Spicy Sauce', price: '$24.80' },
+    { name: 'BBQ Pork in Plum Sauce', price: '$22.80' },
+    { name: 'Pork Chops in Plum Sauce', price: '$22.80' },
+    { name: 'Pork Chops with Spicy Peppery Salt', price: '$22.80' },
+    { name: 'Pork Chops in Peking Style', price: '$22.80' },
+    { name: 'Soya Bean and Dried Bean Curd with Shredded Pork', price: '$23.80' },
+    { name: 'Shredded Pork with Vegetables Wearing a Hat', price: '$25.80' },
+  ]},
+  { cat: 'veg', heading: 'Vegetables & Bean Curd', items: [
+    { name: 'Seafood Bean Curd', price: '$30.80' },
+    { name: 'Combination Bean Curd', price: '$26.80' },
+    { name: 'Pi Pa Bean Curd', price: '$35.80' },
+    { name: 'Stir-Fried Mixed Vegetables', price: '$18.80' },
+    { name: 'Steamed Choy Sum with Oyster Sauce', price: '$16.80' },
+    { name: 'Steamed Chinese Broccoli with Oyster Sauce', price: '$17.80' },
+    { name: 'Chinese Cabbage with Cream Sauce', price: '$18.80' },
+    { name: 'Chinese Cabbage and Chinese Mushroom', price: '$20.80' },
+    { name: 'Shredded Vegetable with Dry Bean Curd', price: '$21.80' },
+    { name: 'Fried Bean Curd with Spicy Peppery Salt', price: '$20.80' },
+    { name: 'Ma Po To Fu (Chilli Bean Curd with Mince)', price: '$22.80' },
+    { name: 'Family Style Bean Curd (Pork or Vegetables)', price: '$24.80' },
+    { name: 'Fried Bean Curd with Golden Brown Sauce', price: '$20.80' },
+  ]},
+  { cat: 'rice', heading: 'Rice Dishes', items: [
+    { name: 'Fried Rice', note: 'Small', price: '$8.00' },
+    { name: 'Special Fried Rice', note: 'Small', price: '$10.00' },
+    { name: 'Minced Beef Fried Rice', price: '$19.80' },
+    { name: 'Fried Rice with Chicken and Garlic', price: '$18.80' },
+    { name: 'Vegetarian Fried Rice', price: '$10.80' },
+    { name: 'Steamed Rice', note: 'Small', price: '$3.00' },
+  ]},
+  { cat: 'special', heading: 'Special Menu', items: [
+    { name: 'Malaysian Lamb Curry', price: '$25.80' },
+    { name: 'Beef Rendeng', note: 'Hot and Spicy', price: '$24.80' },
+    { name: 'Seafood or Prawns Laksa', price: '$26.80' },
+    { name: 'Chicken or Beef Laksa', price: '$22.80' },
+    { name: 'Sambal Chicken or Beef', price: '$22.80' },
+    { name: 'Sambal Prawns', price: '$26.80' },
+    { name: 'Lemak Chicken or Beef', price: '$22.80' },
+    { name: 'Lemak Prawn', price: '$26.80' },
+    { name: 'Fillet Steak with Black Pepper', price: '$30.80' },
+    { name: 'Fillet Steak in Chinese Style', price: '$30.80' },
+    { name: 'Combination Satay', price: '$25.80' },
+  ]},
+  { cat: 'noodles', heading: 'Chow Mein & Rice Noodles', items: [
+    { name: 'King Prawn Chow Mein', note: 'Pan Fried Soft Noodles +$1.00', price: '$26.80' },
+    { name: 'Seafood Chow Mein', note: 'Pan Fried Soft Noodles +$1.00', price: '$26.80' },
+    { name: 'Combination Chow Mein', note: 'Pan Fried Soft Noodles +$1.00', price: '$24.80' },
+    { name: 'Chicken Chow Mein', note: 'Pan Fried Soft Noodles +$1.00', price: '$21.80' },
+    { name: 'Beef Chow Mein', note: 'Pan Fried Soft Noodles +$1.00', price: '$22.80' },
+    { name: 'Mixed Vegetable Chow Mein', note: 'Pan Fried Soft Noodles +$1.00', price: '$20.80' },
+    { name: 'Combination Fried with Rice Noodles', price: '$24.80' },
+    { name: 'Seafood Fried with Rice Noodles', price: '$26.80' },
+    { name: 'Stirred Fried Beef with Rice Noodles', price: '$20.80' },
+    { name: 'Singapore Fried Noodles', price: '$20.80' },
+    { name: 'Char Kuen Teow', price: '$20.80' },
+  ]},
+  { cat: 'shanghai', heading: 'Handmade Noodles & Shanghai Dim Sim', items: [
+    { name: 'Combination Fried Hand Made Noodles', price: '$23.80' },
+    { name: 'Seafood Fried Hand Made Noodles', price: '$25.80' },
+    { name: 'Shredded Pork, Pickled Cabbage with Hand Made Noodles', price: '$19.80' },
+    { name: 'Shredded Pork, Preserved Vegetables with Hand Made Noodles', price: '$19.80' },
+    { name: 'Mixed Vegetable with Hand Made Noodle', price: '$19.80' },
+    { name: 'Shanghai Fried Hand Made Noodles', price: '$19.80' },
+    { name: 'Shanghai Hand Made Noodles in Soup', price: '$19.80' },
+    { name: 'Minced Meat with Hand Made Noodles', price: '$20.80' },
+    { name: 'Fried Pork Chops with Hand Made Noodle Soup', price: '$20.80' },
+    { name: 'Seafood with Hand Made Noodle in Soup', price: '$25.80' },
+    { name: 'Shallot Cakes', note: '2 pieces', price: '$8.80' },
+    { name: 'Boiled Meat Dumplings', note: '10 pieces', price: '$14.80' },
+    { name: 'Boiled Dumplings in Hot and Vinegar Soup', price: '$16.80' },
+    { name: 'Steamed Vegetarian Dumplings', note: '10 pieces', price: '$16.80' },
+    { name: 'Steamed Dumpling', note: '10 pieces', price: '$16.80' },
+    { name: 'Sesame Rolls with Tasty Chopped Meats', price: '$28.80' },
+  ]},
+];
+
+function renderMenu(filterCat) {
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = '';
+  let first = true;
+  menuData.forEach(section => {
+    if (filterCat !== 'all' && section.cat !== filterCat) return;
+    const heading = document.createElement('div');
+    heading.className = 'menu-category-heading';
+    if (first) { heading.style.borderTop = 'none'; first = false; }
+    heading.textContent = section.heading;
+    grid.appendChild(heading);
+    section.items.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'menu-item';
+      el.innerHTML = `<div class="menu-item-name">${item.name}${item.note ? `<span class="menu-item-note">${item.note}</span>` : ''}</div><div class="menu-item-price">${item.price}</div>`;
+      grid.appendChild(el);
+    });
+  });
+}
+
+renderMenu('all');
+
+document.getElementById('catFilter').addEventListener('click', e => {
+  const btn = e.target.closest('.cat-btn');
+  if (!btn) return;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu(btn.dataset.cat);
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    const offset = 70;
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
